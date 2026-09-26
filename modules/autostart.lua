@@ -7,5 +7,12 @@ hl.on("hyprland.start", function()
 
     -- Polkit agent: password prompts for privilege elevation
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
-    -- Phase 4 will add: waybar, hyprpaper, notification daemon, cliphist
+
+    -- Wallpaper daemon (config: ~/.config/hypr/hyprpaper.conf)
+    hl.exec_cmd("hyprpaper")
+
+    -- Status bar (config: ~/.config/waybar/)
+    hl.exec_cmd("waybar")
+
+    -- Phase 4 will add: notification daemon, cliphist
 end)
