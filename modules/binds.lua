@@ -8,7 +8,7 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(p.menu))
 
 -- Window management
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
@@ -56,3 +56,6 @@ hl.bind("SHIFT + Print",
     hl.dsp.exec_cmd('grim -g "$(slurp)" ' .. shots .. ' && notify-send "Screenshot" "Region saved"'))
 hl.bind(mainMod .. " + Print",
     hl.dsp.exec_cmd('grim ' .. shots .. ' && notify-send "Screenshot" "Full screen saved"'))
+
+-- Clipboard history (like Windows Win+V)
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
