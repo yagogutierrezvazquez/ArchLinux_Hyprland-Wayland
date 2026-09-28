@@ -14,5 +14,9 @@ hl.on("hyprland.start", function()
     -- Status bar (config: ~/.config/waybar/)
     hl.exec_cmd("waybar")
 
-    -- Phase 4 will add: notification daemon, cliphist
+    -- Notification daemon (config: ~/.config/mako/config)
+    -- Started explicitly so D-Bus doesn't pick another daemon (e.g. Plasma's)
+    hl.exec_cmd("mako")
+
+    -- Phase 4 will add: cliphist
 end)
