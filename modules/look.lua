@@ -31,5 +31,6 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,     -- no mascot wallpapers
         disable_hyprland_logo   = true,
+    	disable_splash_rendering = true, -- no random quote text on the background
     },
 })
