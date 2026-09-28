@@ -3,6 +3,7 @@
 -- Relative requires use "." as separator (official wiki recommendation).
 
 require("modules.env")
+require("modules.permissions")
 require("modules.monitors")
 require("modules.autostart")
 require("modules.look")
