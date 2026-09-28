@@ -18,5 +18,7 @@ hl.on("hyprland.start", function()
     -- Started explicitly so D-Bus doesn't pick another daemon (e.g. Plasma's)
     hl.exec_cmd("mako")
 
-    -- Phase 4 will add: cliphist
+    -- Clipboard history: watch every copy (text and images) and store it
+    hl.exec_cmd("wl-paste --type text --watch cliphist store")
+    hl.exec_cmd("wl-paste --type image --watch cliphist store")
 end)
