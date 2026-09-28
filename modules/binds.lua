@@ -29,7 +29,7 @@ end
 
 -- Scratchpad
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + CTRL + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Mouse: drag to move / resize
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
@@ -47,3 +47,12 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+
+-- Screenshots (grim + slurp + wl-copy; files go to Pictures/Screenshots)
+local shots = '"$(xdg-user-dir PICTURES)/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"'
+hl.bind(mainMod .. " + SHIFT + S",
+    hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot" "Region copied to clipboard"'))
+hl.bind("SHIFT + Print",
+    hl.dsp.exec_cmd('grim -g "$(slurp)" ' .. shots .. ' && notify-send "Screenshot" "Region saved"'))
+hl.bind(mainMod .. " + Print",
+    hl.dsp.exec_cmd('grim ' .. shots .. ' && notify-send "Screenshot" "Full screen saved"'))
