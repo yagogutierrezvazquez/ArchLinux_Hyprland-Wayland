@@ -19,6 +19,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("mako")
 
     -- Clipboard history: watch every copy (text and images) and store it
-    hl.exec_cmd("wl-paste --type text --watch cliphist store")
-    hl.exec_cmd("wl-paste --type image --watch cliphist store")
+    hl.exec_cmd("wl-paste --type text --watch $HOME/.config/hypr/scripts/cliphist-store.sh")
+    hl.exec_cmd("wl-paste --type image --watch $HOME/.config/hypr/scripts/cliphist-store.sh")
 end)
