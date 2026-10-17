@@ -59,3 +59,6 @@ hl.bind(mainMod .. " + Print",
 
 -- Clipboard history (like Windows Win+V)
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
+
+-- Wallpaper picker (rofi thumbnails -> hyprpaper -> matugen colors)
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("$HOME/.config/rofi/scripts/wallpaper.sh"))
