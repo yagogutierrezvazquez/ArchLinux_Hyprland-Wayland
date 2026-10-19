@@ -12,6 +12,10 @@ hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
+-- Maximize (keeps Waybar + gaps) / true fullscreen (covers everything)
+hl.bind(mainMod .. " + Z",         hl.dsp.window.fullscreen({ mode = "maximized",  action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+
 -- Exit Hyprland
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("hyprctl dispatch 'hl.dsp.exit()'"))
 
@@ -59,6 +63,9 @@ hl.bind(mainMod .. " + Print",
 
 -- Clipboard history (like Windows Win+V)
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
+
+-- Dashboard (Quickshell): clock, calendar, stats, media, controls, power (like Win+A)
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc call dashboard toggle"))
 
 -- Wallpaper picker (rofi thumbnails -> hyprpaper -> matugen colors)
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("$HOME/.config/rofi/scripts/wallpaper.sh"))

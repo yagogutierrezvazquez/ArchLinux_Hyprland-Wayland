@@ -14,6 +14,9 @@ hl.on("hyprland.start", function()
     -- Status bar (config: ~/.config/waybar/)
     hl.exec_cmd("waybar")
 
+    -- Quickshell: auto-hidden dock at the bottom edge (~/.config/quickshell/)
+    hl.exec_cmd("qs")
+
     -- Notification daemon (config: ~/.config/mako/config)
     -- Started explicitly so D-Bus doesn't pick another daemon (e.g. Plasma's)
     hl.exec_cmd("mako")
