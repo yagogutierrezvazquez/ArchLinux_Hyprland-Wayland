@@ -4,5 +4,5 @@
 return {
     terminal    = "kitty",
     fileManager = "dolphin",
-    menu        = "rofi -show drun",
+    menu        = "rofi -show drun -theme ~/.config/rofi/launcher.rasi",
 }
