@@ -14,12 +14,10 @@ hl.on("hyprland.start", function()
     -- Status bar (config: ~/.config/waybar/)
     hl.exec_cmd("waybar")
 
-    -- Quickshell: auto-hidden dock at the bottom edge (~/.config/quickshell/)
+    -- Quickshell (~/.config/quickshell/): dock, media popup, dashboard and the
+    -- notification daemon. Started explicitly so D-Bus doesn't auto-activate
+    -- another daemon (mako, Plasma's) on the first notification.
     hl.exec_cmd("qs")
-
-    -- Notification daemon (config: ~/.config/mako/config)
-    -- Started explicitly so D-Bus doesn't pick another daemon (e.g. Plasma's)
-    hl.exec_cmd("mako")
 
     -- Clipboard history: watch every copy (text and images) and store it
     hl.exec_cmd("wl-paste --type text --watch $HOME/.config/hypr/scripts/cliphist-store.sh")
