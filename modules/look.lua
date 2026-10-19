@@ -31,10 +31,15 @@ hl.config({
             color          = 0x99000000,   -- ARGB
             color_inactive = 0x55000000,
         },
+        -- Frosted glass behind see-through windows (kitty) and menus.
+        -- Only shows where a window is transparent; solid apps are unaffected.
         blur = {
-            enabled = true,
-            size    = 3,
-            passes  = 1,
+            enabled   = true,
+            size      = 8,      -- radius per pass
+            passes    = 3,      -- more passes = smoother, not just bigger
+            noise     = 0.02,   -- a little grain hides color banding
+            vibrancy  = 0.2,    -- keep some of the wallpaper's color
+            popups    = true,   -- right-click menus too
         },
     },
     animations = {
