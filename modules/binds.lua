@@ -67,5 +67,6 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphi
 -- Dashboard (Quickshell): clock, calendar, stats, media, controls, power (like Win+A)
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc call dashboard toggle"))
 
--- Wallpaper picker (rofi thumbnails -> hyprpaper -> matugen colors)
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("$HOME/.config/rofi/scripts/wallpaper.sh"))
+-- Wallpaper carousel (Quickshell -> hyprpaper -> matugen colors).
+-- Fallback rofi picker: ~/.config/rofi/scripts/wallpaper.sh
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("qs ipc call wallpapers toggle"))

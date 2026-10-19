@@ -3,7 +3,7 @@
 -- wallpaper change, then runs `hyprctl reload`).
 local ok, colors = pcall(require, "colors")
 if not ok then
-    colors = { accent = "rgb(7aa2f7)" }   -- same fallback as matugen's config
+    colors = { accent = "rgb(7aa2f7)", inactive = "rgb(2a2a2a)" }   -- matugen's fallback
 end
 
 hl.config({
@@ -13,7 +13,7 @@ hl.config({
         border_size = 2,
         col = {
             active_border   = colors.accent,      -- wallpaper accent, like Waybar's islands
-            inactive_border = "rgba(2a2a2aff)",   -- dark grey, barely there on black
+            inactive_border = colors.inactive,    -- tinted dark, barely there
         },
         resize_on_border = false,
         allow_tearing    = false,
