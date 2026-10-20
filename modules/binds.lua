@@ -61,8 +61,9 @@ hl.bind("SHIFT + Print",
 hl.bind(mainMod .. " + Print",
     hl.dsp.exec_cmd('grim ' .. shots .. ' && notify-send "Screenshot" "Full screen saved"'))
 
--- Clipboard history (like Windows Win+V)
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
+-- Clipboard history (like Windows Win+V): Quickshell panel, Enter pastes
+-- into the previous window (hypr/scripts/clip-list.sh, clip-paste.sh)
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("qs ipc call clipboard toggle"))
 
 -- Dashboard (Quickshell): clock, calendar, stats, media, controls, power (like Win+A)
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc call dashboard toggle"))
@@ -70,3 +71,8 @@ hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("qs ipc call dashboard toggle"))
 -- Wallpaper carousel (Quickshell -> hyprpaper -> matugen colors).
 -- Fallback rofi picker: ~/.config/rofi/scripts/wallpaper.sh
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("qs ipc call wallpapers toggle"))
+
+-- FC Barcelona matches: ~/.config/quickshell/Barca.qml
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("qs ipc call barca toggle"))
+-- Offline Spanish <-> English translator: ~/.config/quickshell/Translator.qml
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("qs ipc call translator toggle"))
