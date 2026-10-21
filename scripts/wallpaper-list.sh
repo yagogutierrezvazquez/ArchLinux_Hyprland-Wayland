@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
-# wallpaper-list.sh: one line per image in ~/wallpapers -> "name<TAB>path<TAB>thumb".
+# wallpaper-list.sh [lock]: one line per image -> "name<TAB>path<TAB>thumb".
+# Images: ~/wallpapers, or ~/lock_wallpapers with "lock" (lock screen images).
 # Thumbnails (480x270, cropped to fill) are cached in ~/.cache/wallpaper-thumbs
-# and only regenerated when the image is newer, so 8K images decode once.
+# (lock ones in its lock/ subfolder, so equal names don't share a thumb) and
+# only regenerated when the image is newer, so 8K images decode once.
 set -euo pipefail
 
 dir="$HOME/wallpapers"
 cache="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper-thumbs"
+if [[ ${1:-} == lock ]]; then
+    dir="$HOME/lock_wallpapers"
+    cache="$cache/lock"
+fi
 mkdir -p "$cache"
 
 find "$dir" -maxdepth 1 -type f \

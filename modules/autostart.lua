@@ -19,6 +19,9 @@ hl.on("hyprland.start", function()
     -- another daemon (mako, Plasma's) on the first notification.
     hl.exec_cmd("qs")
 
+    -- Idle: dim, lock (hyprlock), screen off, suspend (config: hypridle.conf)
+    hl.exec_cmd("hypridle")
+
     -- Clipboard history: watch every copy (text and images) and store it
     hl.exec_cmd("wl-paste --type text --watch $HOME/.config/hypr/scripts/cliphist-store.sh")
     hl.exec_cmd("wl-paste --type image --watch $HOME/.config/hypr/scripts/cliphist-store.sh")

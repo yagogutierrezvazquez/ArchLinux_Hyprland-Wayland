@@ -18,6 +18,8 @@ hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.window.fullscreen({ mode = "fullscreen
 
 -- Exit Hyprland
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("hyprctl dispatch 'hl.dsp.exit()'"))
+-- Lock screen (hypr/hyprlock.conf); pidof: a second press doesn't start another one
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 
 -- Focus with arrows
 for _, dir in ipairs({ "left", "right", "up", "down" }) do
