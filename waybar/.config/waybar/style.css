@@ -36,7 +36,7 @@ window#waybar {
 #cpu,
 #temperature,
 #pulseaudio,
-#mpris,
+#custom-media,
 #custom-record,
 #custom-tray-toggle,
 #network,
@@ -52,7 +52,7 @@ window#waybar {
 /* Clickable things light up on hover */
 #clock:hover,
 #pulseaudio:hover,
-#mpris:hover,
+#custom-media:hover,
 #custom-record:hover,
 #custom-tray-toggle:hover,
 #network:hover,
@@ -98,8 +98,8 @@ window#waybar {
     background: @accent;
 }
 
-#mpris        { color: @accent; }
-#mpris.paused { color: @fg_dim; }
+#custom-media        { color: @accent; }
+#custom-media.paused { color: @fg_dim; }
 
 /* ---------- Center: workspaces ---------- */
 

@@ -13,7 +13,7 @@
 
     "modules-left":   ["clock", "cpu", "temperature", "group/audio"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right":  ["group/tray", "mpris", "network", "battery", "custom/record", "custom/dashboard"],
+    "modules-right":  ["group/tray", "custom/media", "network", "battery", "custom/record", "custom/dashboard"],
 
     // ---------- Left: info ----------
 
@@ -65,14 +65,13 @@
     },
 
     // Media: just an icon (Spotify logo or a note), hidden when nothing plays.
-    // Click opens the Quickshell media popup; middle = previous, right = next.
-    "mpris": {
-        "format": "{player_icon}",
-        "player-icons": {
-            "spotify": "",   // fa-spotify
-            "default": ""    // fa-music
-        },
-        "tooltip-format": "{title} — {artist}",
+    // Custom module instead of the built-in "mpris", which segfaulted Waybar
+    // (libplayerctl, upstream #4450): playerctl now runs in its own process.
+    // Click opens the Quickshell media popup.
+    "custom/media": {
+        "exec": "$HOME/.config/hypr/scripts/media-status.py",
+        "return-type": "json",
+        "restart-interval": 5,       // relaunch the script if it ever exits
         "on-click": "qs ipc call media toggle"
     },
 
