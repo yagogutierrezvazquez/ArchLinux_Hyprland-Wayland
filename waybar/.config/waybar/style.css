@@ -37,6 +37,7 @@ window#waybar {
 #temperature,
 #pulseaudio,
 #mpris,
+#custom-record,
 #custom-tray-toggle,
 #network,
 #battery,
@@ -52,6 +53,7 @@ window#waybar {
 #clock:hover,
 #pulseaudio:hover,
 #mpris:hover,
+#custom-record:hover,
 #custom-tray-toggle:hover,
 #network:hover,
 #battery:hover,
@@ -168,3 +170,15 @@ tooltip label {
     color: @fg;
 }
 
+
+/* ---------- Recording dot (custom/record) ---------- */
+
+#custom-record.idle      { color: @fg_dim; }
+#custom-record.recording {
+    color: @critical;
+    animation: rec-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes rec-pulse {
+    to { color: alpha(@critical, 0.35); }
+}

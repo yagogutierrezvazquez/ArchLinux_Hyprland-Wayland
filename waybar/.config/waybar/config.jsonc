@@ -13,7 +13,7 @@
 
     "modules-left":   ["clock", "cpu", "temperature", "group/audio"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right":  ["group/tray", "mpris", "network", "battery", "custom/dashboard"],
+    "modules-right":  ["group/tray", "mpris", "network", "battery", "custom/record", "custom/dashboard"],
 
     // ---------- Left: info ----------
 
@@ -83,6 +83,16 @@
     },
 
     // ---------- Right: clickable ----------
+
+    // Screen recording dot: grey = idle, red = recording. Click or
+    // SUPER+SHIFT+R toggles; record.sh sends SIGRTMIN+8 when it changes.
+    "custom/record": {
+        "exec": "$HOME/.config/hypr/scripts/record.sh status",
+        "return-type": "json",
+        "interval": 5,              // fallback if a signal is missed
+        "signal": 8,
+        "on-click": "$HOME/.config/hypr/scripts/record.sh toggle"
+    },
 
     // Drawer: the chevron is always visible; click it to slide out the tray.
     "group/tray": {

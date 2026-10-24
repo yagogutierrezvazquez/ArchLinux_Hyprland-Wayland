@@ -20,6 +20,8 @@ hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.window.fullscreen({ mode = "fullscreen
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("hyprctl dispatch 'hl.dsp.exit()'"))
 -- Lock screen (hypr/hyprlock.conf); pidof: a second press doesn't start another one
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
+-- Screen recording on/off (scripts/record.sh; red dot in Waybar while recording)
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("$HOME/.config/hypr/scripts/record.sh toggle"))
 
 -- Focus with arrows
 for _, dir in ipairs({ "left", "right", "up", "down" }) do
