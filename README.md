@@ -53,8 +53,8 @@ The goal is a clean, comfortable workspace for my own projects.
 Arch-based system, Hyprland 0.55+ (Lua config). Managed with GNU Stow:
 
 ```sh
-git clone <this repo> ~/dotfiles
-cd ~/dotfiles
+git clone <this repo> ~/workspace/dotfiles
+cd ~/workspace/dotfiles
 ./setup.sh                      # checks packages, links configs, generates colors
 ./setup.sh translator agenda    # optional extras
 ```

@@ -7,7 +7,7 @@
 #     use the hue-tinted surface_* colors.
 #   Black/white/grey wallpaper: neutral scheme-monochrome + white accent.
 # Templates are relative to this file; outputs use ~ because this folder is a
-# stow symlink into ~/dotfiles, and "../" would resolve inside the repo.
+# stow symlink into the dotfiles repo, and "../" would resolve inside the repo.
 
 [config]
 # Several good colors in an image -> pick the most vivid one, without
