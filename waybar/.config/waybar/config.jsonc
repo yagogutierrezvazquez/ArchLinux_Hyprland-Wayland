@@ -1,0 +1,131 @@
+// ~/.config/waybar/config.jsonc
+// Layout: left = info, center = workspaces, right = clickable.
+// Icons are Nerd Font glyphs (their names are in the comments).
+// Notifications + control center buttons arrive with SwayNC.
+{
+    "layer": "top",          // draw above windows
+    "position": "top",
+    "height": 36,
+    "spacing": 0,            // gaps are handled in style.css
+    "margin-top": 6,         // float the bar: gap from screen edges
+    "margin-left": 10,
+    "margin-right": 10,
+
+    "modules-left":   ["clock", "cpu", "temperature", "group/audio"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right":  ["group/tray", "mpris", "network", "battery", "custom/dashboard"],
+
+    // ---------- Left: info ----------
+
+    "clock": {
+        "format": " {:%H:%M}",              // fa-clock
+        "format-alt": " {:%A %d/%m/%Y}",    // click to toggle date
+        "tooltip-format": "{:%A %d %B %Y}"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}%"                 // fa-microchip
+    },
+
+    // coretemp "Package id 0". hwmon-path-abs stays valid even if
+    // the hwmonN number changes between boots.
+    "temperature": {
+        "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+        "input-filename": "temp1_input",
+        "interval": 5,
+        "warning-threshold": 80,
+        "critical-threshold": 90,
+        "format": " {temperatureC}°C"        // fa-thermometer-half
+    },
+
+    // Drawer: hover the volume icon and a slider slides out to its right.
+    "group/audio": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "audio-hidden",
+            "transition-left-to-right": true
+        },
+        "modules": ["pulseaudio", "pulseaudio/slider"]
+    },
+
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁 muted",       // md-volume-off
+        "format-icons": { "default": ["", "", ""] }, // fa-volume off/low/high
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "scroll-step": 5
+    },
+
+    // Media: just an icon (Spotify logo or a note), hidden when nothing plays.
+    // Click opens the Quickshell media popup; middle = previous, right = next.
+    "mpris": {
+        "format": "{player_icon}",
+        "player-icons": {
+            "spotify": "",   // fa-spotify
+            "default": ""    // fa-music
+        },
+        "tooltip-format": "{title} — {artist}",
+        "on-click": "qs ipc call media toggle"
+    },
+
+    // ---------- Center ----------
+
+    "hyprland/workspaces": {
+        "format": "{id}"
+    },
+
+    // ---------- Right: clickable ----------
+
+    // Drawer: the chevron is always visible; click it to slide out the tray.
+    "group/tray": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "tray-hidden",
+            "click-to-reveal": true,
+            "transition-left-to-right": false   // slide out towards the left
+        },
+        "modules": ["custom/tray-toggle", "tray"]
+    },
+
+    "custom/tray-toggle": {
+        "format": "",        // fa-chevron-left
+        "tooltip-format": "System tray"
+    },
+
+    "tray": {
+        "spacing": 8
+    },
+
+    "network": {
+        "format-wifi": "󰖩 {essid}",           // md-wifi
+        "format-ethernet": "󰈀 wired",         // md-ethernet
+        "format-disconnected": "󰖪 offline",   // md-wifi-off
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) — {ipaddr}",
+        "tooltip-format-ethernet": "{ifname} — {ipaddr}",
+        "on-click": "$HOME/.config/rofi/scripts/wifi.sh"   // Wi-Fi menu
+    },
+
+    // Opens the Quickshell dashboard (also SUPER+A)
+    "custom/dashboard": {
+        "format": "󰕮",   // md-view-dashboard
+        "tooltip-format": "Dashboard",
+        "on-click": "qs ipc call dashboard toggle"
+    },
+
+    // No "bat" key: Waybar auto-detects the battery
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",        // fa-bolt
+        "format-icons": ["", "", "", "", ""], // fa-battery empty..full
+        "states": { "warning": 30, "critical": 15 }
+    }
+}

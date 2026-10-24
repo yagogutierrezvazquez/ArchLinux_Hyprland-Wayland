@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""matrix: decorative "digital rain" in the terminal, in the wallpaper's colors.
+
+    matrix           accent color from the current wallpaper (via Quickshell's colors.json)
+    matrix --green   classic film green
+
+Any key (or Ctrl+C) exits. Pure stdlib; draws with 24-bit ANSI colors in
+the alternate screen, so the terminal comes back untouched.
+"""
+import json
+import os
+import random
+import select
+import shutil
+import sys
+import termios
+import tty
+
+FPS = 24
+TRAIL = 22                     # frames a character stays visible
+CHARS = ("ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ"
+         "0123456789" "0123456789" "ZXCVBNMAQWERTY:.=*+-<>¦")
+
+
+def hex_rgb(h):
+    h = h.lstrip("#")
+    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def load_colors():
+    """(accent, background) from the generated theme, or green on black."""
+    if "--green" not in sys.argv:
+        try:
+            with open(os.path.expanduser("~/.config/quickshell/colors.json")) as f:
+                c = json.load(f)
+            return hex_rgb(c["accent"]), hex_rgb(c["bg"])
+        except (OSError, KeyError, ValueError):
+            pass
+    return (0x33, 0xff, 0x66), (0x05, 0x0a, 0x06)
+
+
+def palette(accent, bg):
+    """ANSI color escape per age: near-white head, then accent fading into bg."""
+    out = ["\x1b[1;38;2;235;255;240m"]
+    for age in range(1, TRAIL):
+        t = (age - 1) / (TRAIL - 2)
+        t = t ** 1.4                                # stay bright longer, then fade
+        r, g, b = (round(a + (z - a) * t) for a, z in zip(accent, bg))
+        out.append(f"\x1b[22;38;2;{r};{g};{b}m")
+    return out
+
+
+def main():
+    colors = palette(*load_colors())
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    out = sys.stdout
+    # alternate screen, hide cursor, clear
+    out.write("\x1b[?1049h\x1b[?25l\x1b[2J")
+    tty.setcbreak(fd)
+    try:
+        cols = rows = 0
+        while True:
+            w, h = shutil.get_terminal_size()
+            if (w, h) != (cols, rows):              # (re)start on resize
+                cols, rows = w, h
+                age = [[-1] * cols for _ in range(rows)]
+                glyph = [[" "] * cols for _ in range(rows)]
+                # one drop per column: head row (float) and speed (rows/frame)
+                heads = [random.uniform(-rows / 2, rows) for _ in range(cols)]   # some already mid-screen
+                speed = [random.uniform(0.3, 1.0) for _ in range(cols)]
+                out.write("\x1b[2J")
+
+            buf = []
+            # move drops; every row the head enters gets a fresh character
+            for x in range(0, cols, 2):              # every other column: kana are wide-ish
+                old_y = int(heads[x])
+                heads[x] += speed[x]
+                for y in range(max(0, old_y + 1), min(rows, int(heads[x]) + 1)):
+                    age[y][x] = 0
+                    glyph[y][x] = random.choice(CHARS)
+                if heads[x] - TRAIL > rows:          # fell off: new drop from the top
+                    heads[x] = random.uniform(-rows / 3, 0)
+                    speed[x] = random.uniform(0.3, 1.0)
+
+            # draw every visible cell with the color for its age
+            for y in range(rows):
+                row_age, row_glyph = age[y], glyph[y]
+                for x in range(0, cols, 2):
+                    a = row_age[x]
+                    if a < 0:
+                        continue
+                    if a >= TRAIL:
+                        row_age[x] = -1
+                        buf.append(f"\x1b[{y + 1};{x + 1}H ")
+                        continue
+                    if a > 0 and random.random() < 0.03:  # occasional flicker
+                        row_glyph[x] = random.choice(CHARS)
+                    buf.append(f"\x1b[{y + 1};{x + 1}H{colors[a]}{row_glyph[x]}")
+                    row_age[x] = a + 1
+
+            out.write("".join(buf))
+            out.flush()
+
+            # any key quits; also paces the frames
+            if select.select([sys.stdin], [], [], 1 / FPS)[0]:
+                os.read(fd, 64)
+                break
+    except KeyboardInterrupt:
+        pass
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
+        out.write("\x1b[0m\x1b[?25h\x1b[?1049l")
+        out.flush()
+
+
+if __name__ == "__main__":
+    main()

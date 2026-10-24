@@ -1,0 +1,8 @@
+{
+    "bg": "{{colors.surface_container_lowest.default.hex}}",
+    "surface": "{{colors.surface_container.default.hex}}",
+    "fg": "{{colors.on_surface.default.hex}}",
+    "fgDim": "{{colors.outline.default.hex}}",
+    "accent": "<* if {{ mono }} *>{{mono_accent}}<* else *>{{colors.primary_container.default.hex | set_lightness: 65.0}}<* endif *>",
+    "accentText": "{{colors.surface_container_lowest.default.hex}}"
+}

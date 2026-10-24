@@ -1,0 +1,57 @@
+# ~/.config/matugen/config.toml  (matugen 4.x)
+# Run by hypr/scripts/set-wallpaper.sh, not by hand: it passes
+# --import-json with the mono/mono_accent values the templates need.
+#   Colored wallpaper: matugen image <wallpaper> -t scheme-fidelity -m dark
+#     Fidelity keeps the wallpaper's real color in primary_container; the
+#     templates lift it to 65% lightness so it reads on the dark base, and
+#     use the hue-tinted surface_* colors.
+#   Black/white/grey wallpaper: neutral scheme-monochrome + white accent.
+# Relative paths are resolved from this file's directory.
+
+[config]
+# Several good colors in an image -> pick the most vivid one, without
+# asking (matugen otherwise prompts, which breaks scripts/keybinds).
+prefer = "saturation"
+fallback_color = "#7aa2f7"   # used if the image has no usable color
+# No [config.wallpaper] section: hyprpaper sets the wallpaper,
+# matugen only generates colors.
+
+# Waybar: generated colors.css is @import-ed by style.css
+[templates.waybar]
+input_path = "./templates/waybar-colors.css"
+output_path = "../waybar/colors.css"
+post_hook = "pkill -USR2 -x waybar"   # SIGUSR2 = reload config + style
+
+# Rofi: generated colors.rasi is @import-ed by the rofi themes
+# (rofi reads its theme on every launch, so no reload needed)
+[templates.rofi]
+input_path = "./templates/rofi-colors.rasi"
+output_path = "../rofi/colors.rasi"
+
+# Quickshell (dock): reloads colors.json by itself when it changes
+[templates.quickshell]
+input_path = "./templates/quickshell-colors.json"
+output_path = "../quickshell/colors.json"
+
+# Hyprland: generated colors.lua is require()d by modules/look.lua
+# (git-ignored in the hypr repo; look.lua falls back if it's missing)
+[templates.hyprland]
+input_path = "./templates/hyprland-colors.lua"
+output_path = "../hypr/colors.lua"
+post_hook = "hyprctl reload"
+
+# Kitty: generated colors.conf is included by kitty.conf; SIGUSR1 = reload config
+[templates.kitty]
+input_path = "./templates/kitty-colors.conf"
+output_path = "../kitty/colors.conf"
+post_hook = "pkill -USR1 -x kitty"
+
+# Fastfetch (terminal fetch): accent-colored keys; read on every run
+[templates.fastfetch]
+input_path = "./templates/fastfetch.jsonc"
+output_path = "../fastfetch/config.jsonc"
+
+# Hyprlock (lock screen): sources the generated file on every lock
+[templates.hyprlock]
+input_path = "./templates/hyprlock-colors.conf"
+output_path = "../hypr/hyprlock-colors.conf"
