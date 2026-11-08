@@ -13,7 +13,7 @@
 
     "modules-left":   ["clock", "cpu", "temperature", "group/audio"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right":  ["group/tray", "custom/media", "network", "battery", "custom/record", "custom/dashboard"],
+    "modules-right":  ["group/tray", "custom/media", "network#vpn", "network", "battery", "custom/record", "custom/dashboard"],
 
     // ---------- Left: info ----------
 
@@ -112,6 +112,17 @@
 
     "tray": {
         "spacing": 8
+    },
+
+    // HTB/THM VPN: tun0 address, hidden while the tunnel is down. Click copies it.
+    "network#vpn": {
+        "interface": "tun0",
+        "rfkill": false,                         // airplane mode must not show it as "disabled"
+        "format-ethernet": "󰖂 {ipaddr}",         // md-vpn
+        "format-linked": "",
+        "format-disconnected": "",
+        "tooltip-format-ethernet": "{ifname} — {ipaddr}/{cidr}",
+        "on-click": "ip -4 -o addr show tun0 | tr -s ' ' | cut -d' ' -f4 | cut -d/ -f1 | wl-copy -n"
     },
 
     "network": {

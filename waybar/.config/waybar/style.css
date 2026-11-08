@@ -153,6 +153,7 @@ window#waybar {
 }
 
 #network.disconnected { color: @fg_dim; }
+#network.vpn { color: @accent; }
 
 #battery.charging         { color: @accent; }
 #battery.warning:not(.charging)  { color: @warning; }
