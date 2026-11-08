@@ -5,6 +5,10 @@ local mainMod = "SUPER"
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(p.terminal))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(p.fileManager))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(p.menu))
+-- Pentest tools (workspace 5, see rules.lua). pgrep: a second press doesn't start
+-- another one; the ^ keeps it from matching the shell that runs this very line
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("pgrep -f '^[^ ]*java .*burpsuite' || burpsuite"))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("pgrep -f '^[^ ]*firefox -P audit' || firefox -P audit --name firefox-audit --new-instance"))
 
 -- Window management
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
