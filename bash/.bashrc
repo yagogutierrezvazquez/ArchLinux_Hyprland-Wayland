@@ -13,6 +13,11 @@ export LIBVA_DRIVER_NAME=iHD
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+
+# BloodHound CE (the stack lives in ~/workspace/workstation)
+alias bloodhound-start='~/workspace/workstation/scripts/bloodhound.sh up -d'
+alias bloodhound-stop='~/workspace/workstation/scripts/bloodhound.sh down'
+
 PS1='[\u@\h \W]\$ '
 
 # Fetch when a new kitty window opens (config: ~/.config/fastfetch, generated
