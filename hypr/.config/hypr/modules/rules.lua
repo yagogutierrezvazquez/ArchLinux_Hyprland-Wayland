@@ -14,3 +14,10 @@ hl.window_rule({
     },
     no_focus = true,
 })
+
+-- Pentest tools open on workspace 5 and take you there
+hl.window_rule({
+    name      = "pentest-workspace",
+    match     = { class = "^(burp-StartBurp|firefox-audit)$" },
+    workspace = "5",
+})
