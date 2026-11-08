@@ -18,6 +18,10 @@ alias grep='grep --color=auto'
 alias bloodhound-start='~/workspace/workstation/scripts/bloodhound.sh up -d'
 alias bloodhound-stop='~/workspace/workstation/scripts/bloodhound.sh down'
 
+# Encrypted engagements folder (gocryptfs)
+alias engagements-open='gocryptfs ~/.engagements.enc ~/engagements'
+alias engagements-close='fusermount3 -u ~/engagements'
+
 PS1='[\u@\h \W]\$ '
 
 # Fetch when a new kitty window opens (config: ~/.config/fastfetch, generated
