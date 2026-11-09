@@ -21,6 +21,7 @@ alias bloodhound-stop='~/workspace/workstation/scripts/bloodhound.sh down'
 # Encrypted engagements folder (gocryptfs)
 alias engagements-open='gocryptfs ~/.engagements.enc ~/engagements'
 alias engagements-close='fusermount3 -u ~/engagements'
+alias engagements-status='mountpoint -q ~/engagements && echo "engagements: ABIERTA (montada, en claro)" || echo "engagements: cerrada (cifrada)"'
 
 PS1='[\u@\h \W]\$ '
 
